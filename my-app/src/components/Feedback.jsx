@@ -11,14 +11,16 @@ import {
   Value,
 } from "./Feedback.styled";
 
-const controlBtn = [
-  { key: "id-1", name: "good" },
-  { key: "id-2", name: "neutral" },
-  { key: "id-3", name: "bad" },
-];
-
-let totalFeedback = 0;
+// let totalFeedback = 0;
 class Feedback extends Component {
+  controlBtn = [
+    { key: "id-1", name: "good" },
+    { key: "id-2", name: "neutral" },
+    { key: "id-3", name: "bad" },
+  ];
+
+  totalFeedback = 0;
+
   state = {
     good: 0,
     neutral: 0,
@@ -26,16 +28,16 @@ class Feedback extends Component {
   };
 
   handleIncrement = (k) => {
-    this.countTotalFeedback();
+    this.totalFeedback = this.countTotalFeedback() + 1;
     return this.setState({ [k]: this.state[k] + 1 });
   };
 
   countTotalFeedback() {
-    totalFeedback = this.state.good + this.state.neutral + this.state.bad + 1;
-    return totalFeedback;
+    return this.state.good + this.state.neutral + this.state.bad;
   }
 
   render() {
+    const { totalFeedback, controlBtn, handleIncrement } = this;
     return (
       <Container>
         <Title>Please leave feedback</Title>
@@ -43,7 +45,7 @@ class Feedback extends Component {
         <ListButton>
           {controlBtn.map(({ key, name }) => (
             <ListButtonItem key={key}>
-              <Button type="button" onClick={() => this.handleIncrement(name)}>
+              <Button type="button" onClick={() => handleIncrement(name)}>
                 {name}
               </Button>
             </ListButtonItem>
