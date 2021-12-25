@@ -1,22 +1,9 @@
 import React, { Component } from "react";
-import {
-  Container,
-  Title,
-  Button,
-  ListButton,
-  ListFeedback,
-  StatisticsTitle,
-  FeedbackItem,
-  ListButtonItem,
-  Value,
-} from "./Feedback.styled";
+import { Container, Title, StatisticsTitle } from "./Feedback.styled";
+import FeedbackOptions from "./FeedbackOptions";
+import Statistics from "./Statistics";
+import NotificationMessage from "./NotificationMessage";
 class Feedback extends Component {
-  controlBtn = [
-    { key: "id-1", name: "good" },
-    { key: "id-2", name: "neutral" },
-    { key: "id-3", name: "bad" },
-  ];
-
   totalFeedback = 0;
   positiveFeedbackPercentage = 0;
 
@@ -44,7 +31,7 @@ class Feedback extends Component {
   }
 
   render() {
-    const { controlBtn, handleIncrement } = this;
+    const { handleIncrement } = this;
 
     this.countTotalFeedback();
     this.countPositiveFeedbackPercentage();
@@ -52,33 +39,21 @@ class Feedback extends Component {
       <Container>
         <Title>Please leave feedback</Title>
 
-        <ListButton>
-          {controlBtn.map(({ key, name }) => (
-            <ListButtonItem key={key}>
-              <Button type="button" onClick={() => handleIncrement(name)}>
-                {name}
-              </Button>
-            </ListButtonItem>
-          ))}
-        </ListButton>
+        <FeedbackOptions handleIncrement={handleIncrement} />
 
         <StatisticsTitle>Statistics</StatisticsTitle>
 
-        <ListFeedback>
-          {controlBtn.map(({ key, name }) => (
-            <FeedbackItem key={key}>
-              {`${name}:`} <Value>{this.state[name]}</Value>
-            </FeedbackItem>
-          ))}
-
-          <FeedbackItem>
-            Total: <Value>{this.totalFeedback}</Value>
-          </FeedbackItem>
-
-          <FeedbackItem>
-            Positive feedback: <Value>{this.positiveFeedbackPercentage}%</Value>
-          </FeedbackItem>
-        </ListFeedback>
+        {this.totalFeedback > 0 ? (
+          <Statistics
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+            total={this.totalFeedback}
+            positivePercentage={this.positiveFeedbackPercentage}
+          />
+        ) : (
+          <NotificationMessage />
+        )}
       </Container>
     );
   }

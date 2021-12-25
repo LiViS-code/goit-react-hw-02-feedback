@@ -65,3 +65,7 @@ export const Value = styled.span`
   font-size: 1.2em;
   font-weight: 700;
 `;
+
+export const Message = styled.p`
+  text-align: center;
+`;
