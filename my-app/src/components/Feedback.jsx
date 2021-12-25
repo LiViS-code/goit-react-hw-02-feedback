@@ -18,6 +18,7 @@ class Feedback extends Component {
   ];
 
   totalFeedback = 0;
+  positiveFeedbackPercentage = 0;
 
   state = {
     good: 0,
@@ -26,16 +27,33 @@ class Feedback extends Component {
   };
 
   handleIncrement = (k) => {
-    this.totalFeedback = this.countTotalFeedback() + 1;
-    return this.setState({ [k]: this.state[k] + 1 });
+    this.setState((state) => {
+      return { [k]: state[k] + 1 };
+    });
   };
 
   countTotalFeedback() {
-    return this.state.good + this.state.neutral + this.state.bad;
+    this.totalFeedback = this.state.good + this.state.neutral + this.state.bad;
+    return this.totalFeedback;
+  }
+
+  countPositiveFeedbackPercentage() {
+    this.positiveFeedbackPercentage =
+      this.totalFeedback === 0
+        ? 0
+        : Math.round((this.state.good / this.totalFeedback) * 100);
+    return this.positiveFeedbackPercentage;
   }
 
   render() {
-    const { totalFeedback, controlBtn, handleIncrement } = this;
+    const {
+      totalFeedback,
+      positiveFeedbackPercentage,
+      controlBtn,
+      handleIncrement,
+      // countTotalFeedback,
+      // countPositiveFeedbackPercentage,
+    } = this;
     return (
       <Container>
         <Title>Please leave feedback</Title>
@@ -43,7 +61,14 @@ class Feedback extends Component {
         <ListButton>
           {controlBtn.map(({ key, name }) => (
             <ListButtonItem key={key}>
-              <Button type="button" onClick={() => handleIncrement(name)}>
+              <Button
+                type="button"
+                onClick={() => {
+                  handleIncrement(name);
+                  // countTotalFeedback;
+                  // countPositiveFeedbackPercentage();
+                }}
+              >
                 {name}
               </Button>
             </ListButtonItem>
@@ -60,6 +85,9 @@ class Feedback extends Component {
           ))}
           <FeedbackItem>
             Total: <Value>{totalFeedback}</Value>
+          </FeedbackItem>
+          <FeedbackItem>
+            Positive feedback: <Value>{positiveFeedbackPercentage}%</Value>
           </FeedbackItem>
         </ListFeedback>
       </Container>
