@@ -27,9 +27,7 @@ class Feedback extends Component {
   };
 
   handleIncrement = (k) => {
-    this.setState((state) => {
-      return { [k]: state[k] + 1 };
-    });
+    this.setState((state) => ({ [k]: state[k] + 1 }));
   };
 
   countTotalFeedback() {
@@ -46,14 +44,10 @@ class Feedback extends Component {
   }
 
   render() {
-    const {
-      totalFeedback,
-      positiveFeedbackPercentage,
-      controlBtn,
-      handleIncrement,
-      // countTotalFeedback,
-      // countPositiveFeedbackPercentage,
-    } = this;
+    const { controlBtn, handleIncrement } = this;
+
+    this.countTotalFeedback();
+    this.countPositiveFeedbackPercentage();
     return (
       <Container>
         <Title>Please leave feedback</Title>
@@ -61,14 +55,7 @@ class Feedback extends Component {
         <ListButton>
           {controlBtn.map(({ key, name }) => (
             <ListButtonItem key={key}>
-              <Button
-                type="button"
-                onClick={() => {
-                  handleIncrement(name);
-                  // countTotalFeedback;
-                  // countPositiveFeedbackPercentage();
-                }}
-              >
+              <Button type="button" onClick={() => handleIncrement(name)}>
                 {name}
               </Button>
             </ListButtonItem>
@@ -83,11 +70,13 @@ class Feedback extends Component {
               {`${name}:`} <Value>{this.state[name]}</Value>
             </FeedbackItem>
           ))}
+
           <FeedbackItem>
-            Total: <Value>{totalFeedback}</Value>
+            Total: <Value>{this.totalFeedback}</Value>
           </FeedbackItem>
+
           <FeedbackItem>
-            Positive feedback: <Value>{positiveFeedbackPercentage}%</Value>
+            Positive feedback: <Value>{this.positiveFeedbackPercentage}%</Value>
           </FeedbackItem>
         </ListFeedback>
       </Container>
