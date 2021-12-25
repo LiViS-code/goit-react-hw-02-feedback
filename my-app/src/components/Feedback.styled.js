@@ -47,6 +47,7 @@ export const Button = styled.button`
   border-radius: ${({ theme }) => theme.spacing(4)};
   border: ${({ theme }) => `1px solid ${theme.colors.primaryColor}`};
   padding: ${({ theme }) => theme.spacing(2)};
+  text-transform: capitalize;
   color: inherit;
   transition: ${({ theme }) => `color ${theme.timing} ${theme.timingFunction}`},
     ${({ theme }) => `background-color ${theme.timing} ${theme.timingFunction}`};

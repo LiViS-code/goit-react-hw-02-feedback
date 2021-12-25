@@ -11,6 +11,11 @@ import {
   Value,
 } from "./Feedback.styled";
 
+const controlBtn = [
+  { key: "id-1", name: "good" },
+  { key: "id-2", name: "neutral" },
+  { key: "id-3", name: "bad" },
+];
 class Feedback extends Component {
   state = {
     good: 0,
@@ -18,10 +23,14 @@ class Feedback extends Component {
     bad: 0,
   };
 
-  handleIncrement = (e) => {
-    const name = e.currentTarget.name;
-    return this.setState({ [name]: this.state[name] + 1 });
+  handleIncrement = (k) => {
+    return this.setState({ [k]: this.state[k] + 1 });
   };
+
+  countTotalFeedback() {
+    console.log(this.state.good + this.state.neutral + this.state.bad);
+    return this.state.good + this.state.neutral + this.state.bad;
+  }
 
   render() {
     const handleIncrement = this.handleIncrement;
@@ -31,23 +40,13 @@ class Feedback extends Component {
         <Title>Please leave feedback</Title>
 
         <ListButton>
-          <ListButtonItem>
-            <Button type="button" name="good" onClick={handleIncrement}>
-              Good
-            </Button>
-          </ListButtonItem>
-
-          <ListButtonItem>
-            <Button type="button" name="neutral" onClick={handleIncrement}>
-              Neutral
-            </Button>
-          </ListButtonItem>
-
-          <ListButtonItem>
-            <Button type="button" name="bad" onClick={handleIncrement}>
-              Bad
-            </Button>
-          </ListButtonItem>
+          {controlBtn.map(({ key, name }) => (
+            <ListButtonItem key={key}>
+              <Button type="button" onClick={() => handleIncrement(name)}>
+                {name}
+              </Button>
+            </ListButtonItem>
+          ))}
         </ListButton>
 
         <StatisticsTitle>Statistics</StatisticsTitle>
@@ -63,6 +62,10 @@ class Feedback extends Component {
 
           <FeedbackItem>
             Bad: <Value>{bad}</Value>
+          </FeedbackItem>
+
+          <FeedbackItem>
+            Total: <Value>total</Value>
           </FeedbackItem>
         </ListFeedback>
       </Container>
