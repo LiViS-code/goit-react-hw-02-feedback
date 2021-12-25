@@ -37,6 +37,7 @@ export const ListFeedback = styled.ul`
 `;
 
 export const FeedbackItem = styled.li`
+  text-transform: capitalize;
   &:not(:last-child) {
     margin-bottom: ${({ theme }) => theme.spacing(3)};
   }

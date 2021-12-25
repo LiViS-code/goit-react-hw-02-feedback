@@ -33,8 +33,6 @@ class Feedback extends Component {
   }
 
   render() {
-    const handleIncrement = this.handleIncrement;
-    const { good, neutral, bad } = this.state;
     return (
       <Container>
         <Title>Please leave feedback</Title>
@@ -42,7 +40,7 @@ class Feedback extends Component {
         <ListButton>
           {controlBtn.map(({ key, name }) => (
             <ListButtonItem key={key}>
-              <Button type="button" onClick={() => handleIncrement(name)}>
+              <Button type="button" onClick={() => this.handleIncrement(name)}>
                 {name}
               </Button>
             </ListButtonItem>
@@ -52,21 +50,11 @@ class Feedback extends Component {
         <StatisticsTitle>Statistics</StatisticsTitle>
 
         <ListFeedback>
-          <FeedbackItem>
-            Good: <Value>{good}</Value>
-          </FeedbackItem>
-
-          <FeedbackItem>
-            Neutral: <Value>{neutral}</Value>
-          </FeedbackItem>
-
-          <FeedbackItem>
-            Bad: <Value>{bad}</Value>
-          </FeedbackItem>
-
-          <FeedbackItem>
-            Total: <Value>total</Value>
-          </FeedbackItem>
+          {controlBtn.map(({ key, name }) => (
+            <FeedbackItem key={key}>
+              {`${name}:`} <Value>{this.state[name]}</Value>
+            </FeedbackItem>
+          ))}
         </ListFeedback>
       </Container>
     );
