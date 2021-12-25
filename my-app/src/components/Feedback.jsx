@@ -10,8 +10,6 @@ import {
   ListButtonItem,
   Value,
 } from "./Feedback.styled";
-
-// let totalFeedback = 0;
 class Feedback extends Component {
   controlBtn = [
     { key: "id-1", name: "good" },
