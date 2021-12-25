@@ -16,6 +16,8 @@ const controlBtn = [
   { key: "id-2", name: "neutral" },
   { key: "id-3", name: "bad" },
 ];
+
+let totalFeedback = 0;
 class Feedback extends Component {
   state = {
     good: 0,
@@ -24,12 +26,13 @@ class Feedback extends Component {
   };
 
   handleIncrement = (k) => {
+    this.countTotalFeedback();
     return this.setState({ [k]: this.state[k] + 1 });
   };
 
   countTotalFeedback() {
-    console.log(this.state.good + this.state.neutral + this.state.bad);
-    return this.state.good + this.state.neutral + this.state.bad;
+    totalFeedback = this.state.good + this.state.neutral + this.state.bad + 1;
+    return totalFeedback;
   }
 
   render() {
@@ -55,6 +58,9 @@ class Feedback extends Component {
               {`${name}:`} <Value>{this.state[name]}</Value>
             </FeedbackItem>
           ))}
+          <FeedbackItem>
+            Total: <Value>{totalFeedback}</Value>
+          </FeedbackItem>
         </ListFeedback>
       </Container>
     );
